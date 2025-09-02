@@ -15,27 +15,6 @@ export const goods = [
   'Garlic',
 ];
 
-const AddButton = ({ handleClick }) => (
-  <button
-    data-cy="AddButton"
-    type="button"
-    className="button"
-    onClick={handleClick}
-  >
-    +
-  </button>
-);
-const RemoveButton = ({ handleClick }) => (
-  <button
-    data-cy="RemoveButton"
-    type="button"
-    className="button is-info"
-    onClick={handleClick}
-  >
-    -
-  </button>
-);
-
 export const App = () => {
   const [selectedGood, setSelectedGood] = useState('Jam');
 
@@ -44,13 +23,13 @@ export const App = () => {
   };
 
   const handleRemove = () => {
-    setSelectedGood(null);
+    setSelectedGood('');
   };
 
   return (
     <main className="section container">
       <h1 className="title is-flex is-align-items-center">
-        {!selectedGood ? (
+        {selectedGood === '' ? (
           <>No goods selected</>
         ) : (
           <>
@@ -76,10 +55,26 @@ export const App = () => {
               }
             >
               <td>
-                {selectedGood === good ? (
-                  <RemoveButton handleClick={handleRemove} />
-                ) : (
-                  <AddButton handleClick={() => handleAdd(good)} />
+                {selectedGood === good && (
+                  <button
+                    data-cy="RemoveButton"
+                    type="button"
+                    className="button is-info"
+                    onClick={handleRemove}
+                  >
+                    -
+                  </button>
+                )}
+
+                {selectedGood === '' && (
+                  <button
+                    data-cy="AddButton"
+                    type="button"
+                    className="button"
+                    onClick={() => handleAdd(good)}
+                  >
+                    +
+                  </button>
                 )}
               </td>
 
